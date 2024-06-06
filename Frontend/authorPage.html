@@ -1,0 +1,99 @@
+<!-- authorPage.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Author</title>
+
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        form {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        label {
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        input {
+            padding: 5px;
+            margin-bottom: 10px;
+        }
+
+        button {
+            padding: 8px 15px;
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        h3 {
+            margin-top: 20px;
+            color: #333;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            text-align: center;
+        }
+
+        li {
+            margin-bottom: 10px;
+            padding: 8px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+  <h2>Welcome, Author!</h2>
+  <form action="/authorDetails" method="post">
+    <label for="authorName">Author Name:</label>
+    <input type="text" id="authorName" name="authorName" required>
+    <br>
+    <button type="submit">Show Details</button>
+  </form>
+  <h3>Author's Book Details</h3>
+  <ul id="authorDetails"></ul>
+  <script>
+    // Fetch and display author's book details
+    document.addEventListener('DOMContentLoaded', () => {
+      fetch('/getAuthorDetails')
+        .then(response => response.json())
+        .then(details => {
+          const authorDetailsList = document.getElementById('authorDetails');
+          details.forEach(detail => {
+            const listItem = document.createElement('li');
+            listItem.textContent = `Title: ${detail.title}, Review: ${detail.review}`;
+            authorDetailsList.appendChild(listItem);
+          });
+        });
+    });
+  </script>
+</body>
+</html>
